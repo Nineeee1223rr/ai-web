@@ -47,9 +47,8 @@ export class Database extends Dexie {
 export const DB = new Database();
 
 export const initialSettings = {
-    openaiKey: '',
     image_steps: 20,
-    system_prompt: 'You are ChatGPT, a large language model trained by OpenAI. Follow the user\'s instructions carefully. Respond using markdown.',
+    system_prompt: '',
 }
 
 export type Settings = typeof initialSettings
