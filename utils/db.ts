@@ -6,7 +6,7 @@ export class Database extends Dexie {
 
     constructor() {
         super('ai')
-        this.version(5).stores({
+        this.version(4).stores({
             history: '++id, session, type, role, content, src',
             tab: '++id, label'
         })
@@ -47,135 +47,60 @@ export class Database extends Dexie {
 export const DB = new Database();
 
 export const initialSettings = {
-
+    openaiKey: '',
     image_steps: 20,
-    system_prompt: '',
+    system_prompt: 'You are ChatGPT, a large language model trained by OpenAI. Follow the user\'s instructions carefully. Respond using markdown.',
 }
 
 export type Settings = typeof initialSettings
 
-export const additionalTextGenModels: Model[] = [
-    {
-        id: 'lama-2-7b-chat-fp16',
-        name: 'lama-2-7b-chat-fp16',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'mistral-7b-instruct-v0.1',
-        name: 'mistral-7b-instruct-v0.1',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'deepseek-coder-6.7b-base-awg',
-        name: 'deepseek-coder-6.7b-base-awg',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'deepseek-math-7b-base',
-        name: 'deepseek-math-7b-base',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'discolm-german-7b-v1-awg',
-        name: 'discolm-german-7b-v1-awg',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'falcon-7b-instruct',
-        name: 'falcon-7b-instruct',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'gemma-2b-it-lora',
-        name: 'gemma-2b-it-lora',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'hermes-2-pro',
-        name: 'hermes-2-pro',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'lama-2-13b-chat-awg',
-        name: 'lama-2-13b-chat-awg',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'lamaguard-7b-awg',
-        name: 'lamaguard-7b-awg',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'mistral-7b-instruct-v0.2',
-        name: 'mistral-7b-instruct-v0.2',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'neural-chat-7b-v3-1-awg',
-        name: 'neural-chat-7b-v3-1-awg',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'phi-2',
-        name: 'phi-2',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'qwen1.5-0.5b-chat',
-        name: 'qwen1.5-0.5b-chat',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'qwen1.5-1.8b-chat',
-        name: 'qwen1.5-1.8b-chat',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'qwen1.5-7b-chat',
-        name: 'qwen1.5-7b-chat',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'sqlcoder-7b-2',
-        name: 'sqlcoder-7b-2',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'starling-lm-7b-beta',
-        name: 'starling-lm-7b-beta',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'una-cybertron-7b-v2-bf16',
-        name: 'una-cybertron-7b-v2-bf16',
-        provider: 'workers-ai',
-        type: 'chat'
-    },
-    {
-        id: 'zephyr-7b',
-        name: 'zephyr-7b',
-        provider: 'workers-ai',
-        type: 'chat'
-    }
-];
+// 从 Cloudflare Workers AI 模型页面添加新模型
+export const textGenModels: Model[] = [{
+    id: '@cf/qwen/qwen1.5-14b-chat-awq',
+    name: 'qwen1.5-14b-chat-awq',
+    provider: 'workers-ai',
+    type: 'chat'
+}, {
+    id: '@cf/openchat/openchat-3.5-0106',
+    name: 'openchat-3.5-0106',
+    provider: 'workers-ai',
+    type: 'chat'
+}, {
+    id: '@cf/google/gemma-7b-it-lora',
+    name: 'gemma-7b-it-lora',
+    provider: 'workers-ai',
+    type: 'chat'
+}, {
+    id: '@hf/thebloke/openhermes-2.5-mistral-7b-awq',
+    name: 'openhermes-2.5-mistral-7b-awq',
+    provider: 'workers-ai',
+    type: 'chat'
+}, {
+    id: '@hf/thebloke/neural-chat-7b-v3-1-awq',
+    name: 'neural-chat-7b-v3-1-awq',
+    provider: 'workers-ai',
+    type: 'chat'
+}, {
+    id: '@hf/nexusflow/starling-lm-7b-beta',
+    name: 'starling-lm-7b-beta',
+    provider: 'workers-ai',
+    type: 'chat'
+}, {
+    id: '@cf/meta/llama-3-8b-instruct',
+    name: 'llama-3-8b-instruct',
+    provider: 'workers-ai',
+    type: 'chat'
+}, {
+    id: '@cf/anthropic/claude-2',
+    name: 'claude-2',
+    provider: 'workers-ai',
+    type: 'chat'
+}, {
+    id: '@cf/openai/gpt-4-turbo',
+    name: 'gpt-4-turbo',
+    provider: 'workers-ai',
+    type: 'chat'
+}]
 
 export const imageGenModels: Model[] = [{
     id: '@cf/lykon/dreamshaper-8-lcm',
@@ -190,6 +115,16 @@ export const imageGenModels: Model[] = [{
 }, {
     id: '@cf/bytedance/stable-diffusion-xl-lightning',
     name: 'stable-diffusion-xl-lightning',
+    provider: 'workers-ai-image',
+    type: 'text-to-image'
+}, {
+    id: '@cf/midjourney/midjourney-v5.2',
+    name: 'midjourney-v5.2',
+    provider: 'workers-ai-image',
+    type: 'text-to-image'
+}, {
+    id: '@cf/eleutherai/gpt-neox-20b',
+    name: 'gpt-neox-20b',
     provider: 'workers-ai-image',
     type: 'text-to-image'
 }]
